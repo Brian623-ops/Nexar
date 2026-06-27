@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexar — Gasista Matriculado en San Rafael, Mendoza</title>
+<meta name="description" content="Instalación, diagnóstico, reparación, mantenimiento y calibración de gas. Gasista matriculado en San Rafael, Mendoza.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --ink:        #0D0D0D;
+    --panel:      #161412;
+    --panel-2:    #1E1B17;
+    --flame-1:    #FFB800;
+    --flame-2:    #FF6B00;
+    --flame-3:    #E8380D;
+    --sky:        #29B6F6;
+    --paper:      #F4F1EA;
+    --paper-dim:  #C9C2B4;
+    --line:       rgba(244,241,234,0.10);
+    --radius:     10px;
+    --maxw:       1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  section{padding:96px 24px;}
+  .wrap{max-width:var(--maxw);margin:0 auto;}
+
+  h1,h2,h3{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:.02em;
+    line-height:.95;
+    text-transform:uppercase;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--flame-1);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ============ NAV ============ */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(13,13,13,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:26px;letter-spacing:.02em;
+  }
+  .brand .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:linear-gradient(135deg,var(--sky),var(--flame-1));
+    box-shadow:0 0 12px rgba(41,182,246,0.6);
+  }
+  .brand-nex{color:var(--sky);letter-spacing:0;}
+  .brand-ar{color:var(--flame-1);letter-spacing:0;}
+  .nav-links{display:flex;gap:32px;}
+  .nav-links a{
+    font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:600;color:var(--paper-dim);
+    transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--flame-1);}
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--flame-2);color:var(--ink);
+    font-weight:700;font-size:13px;letter-spacing:.06em;
+    padding:10px 20px;border-radius:50px;
+    text-transform:uppercase;
+  }
+  .nav-toggle{display:none;}
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;align-items:center;
+    padding:140px 24px 80px;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(ellipse 60% 50% at 78% 30%, rgba(255,107,0,0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 40% at 15% 80%, rgba(255,184,0,0.08) 0%, transparent 55%);
+  }
+  .hero-grid{
+    position:absolute;inset:0;z-index:0;opacity:.5;
+    background-image:
+      linear-gradient(rgba(244,241,234,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244,241,234,0.025) 1px, transparent 1px);
+    background-size:56px 56px;
+  }
+  .hero-inner{
+    position:relative;z-index:1;
+    max-width:var(--maxw);margin:0 auto;width:100%;
+    display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    border:1px solid rgba(255,184,0,0.35);
+    background:rgba(255,184,0,0.06);
+    border-radius:50px;padding:7px 18px;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    font-weight:700;color:var(--flame-1);margin-bottom:28px;
+  }
+  .eyebrow .pulse{
+    width:7px;height:7px;border-radius:50%;background:var(--flame-1);
+    animation:pulseGlow 1.6s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,184,0,.5)}50%{opacity:.5;box-shadow:0 0 0 6px rgba(255,184,0,0)}}
+
+  .hero h1{
+    font-size:clamp(48px,7vw,92px);
+    color:var(--paper);
+  }
+  .hero h1 .accent{
+    background:linear-gradient(100deg,var(--flame-1) 0%, var(--flame-2) 55%, var(--flame-3) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .hero p.lead{
+    font-size:18px;line-height:1.7;color:var(--paper-dim);
+    max-width:520px;margin-top:24px;
+  }
+  .hero-ctas{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:16px 28px;border-radius:8px;
+    font-weight:700;font-size:15px;
+    transition:transform .15s ease, box-shadow .2s ease;
+    border:1px solid transparent;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-whatsapp{
+    background:#25D366;color:#06210F;
+    box-shadow:0 8px 28px rgba(37,211,102,0.28);
+  }
+  .btn-whatsapp:hover{box-shadow:0 10px 34px rgba(37,211,102,0.4);transform:translateY(-2px);}
+  .btn-ghost{
+    border-color:var(--line);color:var(--paper);
+    background:rgba(244,241,234,0.03);
+  }
+  .btn-ghost:hover{border-color:rgba(255,184,0,0.4);color:var(--flame-1);}
+
+  .trust-row{
+    display:flex;gap:28px;margin-top:48px;flex-wrap:wrap;
+  }
+  .trust-item{display:flex;align-items:center;gap:10px;}
+  .trust-item .ico{font-size:20px;}
+  .trust-item span{font-size:13px;color:var(--paper-dim);font-weight:500;}
+
+  /* ---- Hero visual: the flame ---- */
+  .hero-visual{
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    height:420px;
+  }
+  .flame-ring{
+    position:absolute;width:340px;height:340px;border-radius:50%;
+    border:1px solid rgba(255,184,0,0.18);
+  }
+  .flame-ring.r2{width:420px;height:420px;border-color:rgba(255,107,0,0.10);}
+  .flame-svg{width:230px;height:auto;position:relative;z-index:2;filter:drop-shadow(0 0 60px rgba(255,107,0,0.45));}
+  .flame-tip{animation:flicker 2.4s ease-in-out infinite;}
+  .flame-core{animation:flicker 1.8s ease-in-out infinite reverse;}
+  @keyframes flicker{
+    0%,100%{transform:scaleY(1) scaleX(1);}
+    30%{transform:scaleY(1.04) scaleX(.98) translateX(1px);}
+    60%{transform:scaleY(.97) scaleX(1.02) translateX(-1px);}
+  }
+  .badge-float{
+    position:absolute;bottom:6px;right:6px;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:12px 16px;
+    display:flex;align-items:center;gap:10px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.4);
+  }
+  .badge-float .ico{font-size:22px;}
+  .badge-float .txt b{display:block;font-size:13px;color:var(--paper);}
+  .badge-float .txt small{font-size:11px;color:var(--paper-dim);letter-spacing:.04em;}
+
+  /* ============ SECTION HEADERS ============ */
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-tag{
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--flame-1);font-weight:700;margin-bottom:14px;display:block;
+  }
+  .section-head h2{font-size:clamp(32px,4.2vw,48px);color:var(--paper);}
+  .section-head p{color:var(--paper-dim);margin-top:16px;font-size:16px;line-height:1.7;}
+
+  /* ============ SERVICES ============ */
+  .services{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .svc-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  }
+  .svc-card{
+    background:var(--panel);padding:36px 28px;
+    transition:background .25s ease;
+    position:relative;
+  }
+  .svc-card:hover{background:var(--panel-2);}
+  .svc-card::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--flame-1),var(--flame-3));
+    transform:scaleY(0);transform-origin:top;
+    transition:transform .25s ease;
+  }
+  .svc-card:hover::before{transform:scaleY(1);}
+  .svc-ico{font-size:30px;margin-bottom:18px;display:block;}
+  .svc-card h3{
+    font-family:'Inter',sans-serif;font-size:18px;font-weight:700;
+    text-transform:none;letter-spacing:0;margin-bottom:10px;color:var(--paper);
+  }
+  .svc-card p{font-size:14.5px;color:var(--paper-dim);line-height:1.6;}
+
+  /* ============ PROCESS ============ */
+  .process-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  }
+  .process-step{position:relative;}
+  .process-num{
+    font-family:'Bebas Neue',sans-serif;font-size:48px;
+    background:linear-gradient(135deg,var(--flame-1),var(--flame-3));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    margin-bottom:14px;
+  }
+  .process-step h3{
+    font-family:'Inter',sans-serif;font-size:17px;font-weight:700;
+    text-transform:none;letter-spacing:0;color:var(--paper);margin-bottom:8px;
+  }
+  .process-step p{font-size:14px;color:var(--paper-dim);line-height:1.6;}
+  .process-step:not(:last-child)::after{
+    content:'';position:absolute;top:24px;left:calc(100% - 8px);width:32px;height:1px;
+    background:repeating-linear-gradient(90deg,var(--line) 0 6px, transparent 6px 12px);
+  }
+
+  /* ============ TRUST / MATRICULADO ============ */
+  .trust{
+    background:var(--panel);border-radius:16px;border:1px solid var(--line);
+    padding:56px;display:grid;grid-template-columns:auto 1fr;gap:44px;align-items:center;
+  }
+  .trust-icon-wrap{
+    width:120px;height:120px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(255,184,0,0.18), rgba(255,107,0,0.05));
+    border:1px solid rgba(255,184,0,0.3);
+    display:flex;align-items:center;justify-content:center;font-size:52px;
+    flex-shrink:0;
+  }
+  .trust-copy h3{
+    font-family:'Inter',sans-serif;font-weight:800;font-size:24px;
+    text-transform:none;letter-spacing:0;color:var(--paper);margin-bottom:10px;
+  }
+  .trust-copy p{color:var(--paper-dim);font-size:15.5px;line-height:1.7;max-width:600px;}
+
+  /* ============ CONTACT ============ */
+  .contact{
+    background:linear-gradient(165deg,var(--panel) 0%, var(--ink) 100%);
+    border-top:1px solid var(--line);
+  }
+  .contact-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;
+  }
+  .contact h2{font-size:clamp(34px,4.5vw,52px);color:var(--paper);margin-bottom:18px;}
+  .contact > .wrap > .contact-grid > div:first-child p{
+    color:var(--paper-dim);font-size:16px;line-height:1.7;margin-bottom:32px;max-width:460px;
+  }
+  .contact-list{display:flex;flex-direction:column;gap:20px;}
+  .contact-row{
+    display:flex;align-items:center;gap:16px;
+    padding:18px 20px;border:1px solid var(--line);border-radius:10px;
+    background:rgba(244,241,234,0.02);
+    transition:border-color .2s;
+  }
+  .contact-row:hover{border-color:rgba(255,184,0,0.3);}
+  .contact-row .ico{
+    width:44px;height:44px;border-radius:10px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:20px;
+    background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.2);
+  }
+  .contact-row .label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:3px;}
+  .contact-row .value{font-weight:700;font-size:16px;color:var(--paper);}
+  .contact-row .value a{transition:color .2s;}
+  .contact-row .value a:hover{color:var(--flame-1);}
+
+  .whatsapp-panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:40px;text-align:center;
+  }
+  .whatsapp-panel .wa-ico{font-size:48px;margin-bottom:18px;}
+  .whatsapp-panel h3{
+    font-family:'Inter',sans-serif;font-weight:800;font-size:22px;
+    text-transform:none;letter-spacing:0;color:var(--paper);margin-bottom:10px;
+  }
+  .whatsapp-panel p{color:var(--paper-dim);font-size:14.5px;line-height:1.6;margin-bottom:28px;}
+  .whatsapp-panel .btn-whatsapp{width:100%;justify-content:center;padding:18px;font-size:16px;}
+
+  /* ============ FOOTER ============ */
+  footer{
+    border-top:1px solid var(--line);padding:32px 24px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  }
+  footer .wrap{
+    max-width:var(--maxw);margin:0 auto;width:100%;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  }
+  footer small{color:var(--paper-dim);font-size:13px;}
+  footer .foot-links{display:flex;gap:24px;}
+  footer .foot-links a{font-size:13px;color:var(--paper-dim);transition:color .2s;}
+  footer .foot-links a:hover{color:var(--flame-1);}
+
+  /* ============ FLOATING WHATSAPP BUTTON ============ */
+  .float-wa{
+    position:fixed;bottom:24px;right:24px;z-index:200;
+    width:60px;height:60px;border-radius:50%;
+    background:#25D366;color:#06210F;
+    display:flex;align-items:center;justify-content:center;
+    font-size:28px;
+    box-shadow:0 10px 30px rgba(37,211,102,0.45);
+    animation:floatPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes floatPulse{
+    0%,100%{box-shadow:0 10px 30px rgba(37,211,102,0.45);}
+    50%{box-shadow:0 10px 30px rgba(37,211,102,0.7), 0 0 0 8px rgba(37,211,102,0.12);}
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:980px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-visual{height:300px;margin-top:24px;}
+    .svc-grid{grid-template-columns:repeat(2,1fr);}
+    .process-grid{grid-template-columns:repeat(2,1fr);}
+    .process-step::after{display:none;}
+    .trust{grid-template-columns:1fr;text-align:center;padding:40px 28px;}
+    .trust-icon-wrap{margin:0 auto;}
+    .contact-grid{grid-template-columns:1fr;gap:40px;}
+  }
+
+  @media (max-width:680px){
+    section{padding:72px 18px;}
+    .nav-links{display:none;}
+    .nav-cta{padding:9px 16px;font-size:12px;}
+    .hero{padding-top:120px;}
+    .hero h1{font-size:clamp(36px,10vw,56px);}
+    .hero p.lead{font-size:16px;}
+    .hero-ctas .btn{flex:1;justify-content:center;}
+    .svc-grid{grid-template-columns:1fr;}
+    .process-grid{grid-template-columns:1fr;gap:28px;}
+    footer .wrap{flex-direction:column;text-align:center;}
+    .float-wa{width:54px;height:54px;font-size:24px;bottom:18px;right:18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header>
+  <nav class="nav">
+    <a href="#top" class="brand"><span class="dot"></span><span class="brand-nex">NEX</span><span class="brand-ar">AR</span></a>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#proceso">Cómo trabajamos</a></li>
+      <li><a href="#confianza">Matrícula</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="https://wa.me/5492604089091?text=Hola%2C%20necesito%20un%20gasista" target="_blank" rel="noopener">
+      WhatsApp
+    </a>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow"><span class="pulse"></span>Gasista matriculado · San Rafael, Mendoza</span>
+      <h1>Gas seguro,<br><span class="accent">trabajo</span><br>garantizado.</h1>
+      <p class="lead">
+        Instalaciones, reparaciones y mantenimiento de gas para tu casa o negocio en San Rafael.
+        Diagnóstico certero, trabajo prolijo y atención directa por WhatsApp.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-whatsapp" href="https://wa.me/5492604089091?text=Hola%2C%20necesito%20un%20gasista" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.94.56 3.76 1.53 5.31L2 22l4.94-1.62a9.84 9.84 0 0 0 5.1 1.4h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.06c-.24.68-1.42 1.32-1.95 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.37-.15-.2-1.18-1.57-1.18-3 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 0.88 2.15.07.15.12.33.02.53-.1.2-.16.32-.31.5-.15.17-.31.38-.45.51-.15.14-.3.29-.13.58.18.3.81 1.34 1.74 2.17 1.2 1.07 2.21 1.4 2.52 1.55.31.15.49.13.67-.05.18-.18.78-.91 1-1.22.21-.31.42-.26.71-.16.29.11 1.84.87 2.15 1.03.31.16.52.24.6.37.08.13.08.78-.16 1.46z"/></svg>
+          Escribir por WhatsApp
+        </a>
+        <a class="btn btn-ghost" href="#servicios">Ver servicios</a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-item"><span class="ico">🛡️</span><span>Gasista matriculado</span></div>
+        <div class="trust-item"><span class="ico">📍</span><span>Salto de las Rosas, San Rafael</span></div>
+        <div class="trust-item"><span class="ico">⏱️</span><span>Respuesta rápida</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="flame-ring"></div>
+      <div class="flame-ring r2"></div>
+      <svg class="flame-svg" viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="flameGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#FF6B00"/>
+            <stop offset="55%" stop-color="#FFB800"/>
+            <stop offset="100%" stop-color="#FFE9A8"/>
+          </linearGradient>
+          <linearGradient id="flameCoreGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#E8380D"/>
+            <stop offset="100%" stop-color="#FF6B00"/>
+          </linearGradient>
+        </defs>
+        <path class="flame-tip" d="M100 10C110 50 150 80 150 130C150 175 128 210 100 210C72 210 50 175 50 130C50 95 70 80 78 55C82 70 88 78 95 75C90 55 92 28 100 10Z" fill="url(#flameGrad)"/>
+        <path class="flame-core" d="M100 90C108 110 124 122 124 148C124 170 113 186 100 186C87 186 76 170 76 148C76 130 88 122 92 108C95 116 100 118 102 114C99 104 99 98 100 90Z" fill="url(#flameCoreGrad)"/>
+      </svg>
+      <div class="badge-float">
+        <span class="ico">✅</span>
+        <span class="txt"><b>Matrícula vigente</b><small>Trabajo certificado</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="services" id="servicios">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Lo que hacemos</span>
+      <h2>Servicios de gas, de punta a punta</h2>
+      <p>Desde la instalación inicial hasta el mantenimiento periódico: cubrimos todo el ciclo de vida de tu instalación de gas.</p>
+    </div>
+
+    <div class="svc-grid">
+      <article class="svc-card">
+        <span class="svc-ico">🔧</span>
+        <h3>Instalación</h3>
+        <p>Instalación de gas para cocinas, calefones, estufas y sistemas centralizados, con habilitación según normativa.</p>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ico">🔍</span>
+        <h3>Diagnóstico</h3>
+        <p>Detección de fugas, pérdidas de presión y fallas de combustión antes de que se conviertan en un problema mayor.</p>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ico">⚙️</span>
+        <h3>Reparación</h3>
+        <p>Arreglo de artefactos, cañerías y conexiones dañadas, con repuestos originales cuando corresponde.</p>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ico">🧰</span>
+        <h3>Mantenimiento</h3>
+        <p>Revisiones preventivas periódicas para que tu instalación funcione segura todo el año.</p>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ico">📐</span>
+        <h3>Calibración</h3>
+        <p>Ajuste de presión y regulación de artefactos para un consumo eficiente y una llama estable.</p>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ico">📋</span>
+        <h3>Certificaciones</h3>
+        <p>Documentación y certificados de instalación para trámites, alquileres o habilitaciones comerciales.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESO ============ -->
+<section id="proceso">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Cómo trabajamos</span>
+      <h2>Simple, claro y sin sorpresas</h2>
+      <p>Cuatro pasos entre tu primer mensaje y el trabajo terminado.</p>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <h3>Nos escribís</h3>
+        <p>Contanos qué necesitás por WhatsApp y coordinamos una visita.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <h3>Diagnóstico en el lugar</h3>
+        <p>Evaluamos la instalación y te explicamos qué hay que hacer, sin tecnicismos.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <h3>Presupuesto claro</h3>
+        <p>Te decimos el costo antes de empezar, sin cargos ocultos.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <h3>Trabajo y certificado</h3>
+        <p>Hacemos el trabajo y, si corresponde, te entregamos la documentación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONFIANZA ============ -->
+<section id="confianza">
+  <div class="wrap">
+    <div class="trust">
+      <div class="trust-icon-wrap" aria-hidden="true">🛡️</div>
+      <div class="trust-copy">
+        <h3>Gasista matriculado, instalación segura</h3>
+        <p>
+          Nexar trabaja con matrícula vigente, lo que significa que cada instalación y reparación
+          cumple con las normas de seguridad correspondientes. Eso te da tranquilidad a la hora de
+          alquilar, vender o simplemente vivir en tu casa sin preocuparte por el gas.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="contact" id="contacto">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div>
+        <h2>Hablemos de tu instalación</h2>
+        <p>Contanos qué necesitás y coordinamos una visita en San Rafael y alrededores.</p>
+
+        <div class="contact-list">
+          <div class="contact-row">
+            <div class="ico">📞</div>
+            <div>
+              <div class="label">Teléfono</div>
+              <div class="value"><a href="tel:+5492604089091">2604 - 089091</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="ico">📍</div>
+            <div>
+              <div class="label">Zona de trabajo</div>
+              <div class="value">Salto de las Rosas, San Rafael, Mendoza</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="ico">📷</div>
+            <div>
+              <div class="label">Instagram</div>
+              <div class="value"><a href="https://instagram.com/nexar.sa" target="_blank" rel="noopener">@nexar.sa</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="whatsapp-panel">
+        <div class="wa-ico">💬</div>
+        <h3>Respuesta rápida por WhatsApp</h3>
+        <p>Es la forma más directa de contarnos tu problema y coordinar una visita, sin vueltas.</p>
+        <a class="btn btn-whatsapp" href="https://wa.me/5492604089091?text=Hola%2C%20necesito%20un%20gasista" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.94.56 3.76 1.53 5.31L2 22l4.94-1.62a9.84 9.84 0 0 0 5.1 1.4h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.06c-.24.68-1.42 1.32-1.95 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.37-.15-.2-1.18-1.57-1.18-3 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 0.88 2.15.07.15.12.33.02.53-.1.2-.16.32-.31.5-.15.17-.31.38-.45.51-.15.14-.3.29-.13.58.18.3.81 1.34 1.74 2.17 1.2 1.07 2.21 1.4 2.52 1.55.31.15.49.13.67-.05.18-.18.78-.91 1-1.22.21-.31.42-.26.71-.16.29.11 1.84.87 2.15 1.03.31.16.52.24.6.37.08.13.08.78-.16 1.46z"/></svg>
+          Escribir ahora
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <small>© 2026 Nexar — Gasista matriculado. Salto de las Rosas, San Rafael, Mendoza.</small>
+    <div class="foot-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#contacto">Contacto</a>
+      <a href="https://instagram.com/nexar.sa" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ FLOATING WHATSAPP ============ -->
+<a class="float-wa" href="https://wa.me/5492604089091?text=Hola%2C%20necesito%20un%20gasista" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.94.56 3.76 1.53 5.31L2 22l4.94-1.62a9.84 9.84 0 0 0 5.1 1.4h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.06c-.24.68-1.42 1.32-1.95 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.37-.15-.2-1.18-1.57-1.18-3 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 0.88 2.15.07.15.12.33.02.53-.1.2-.16.32-.31.5-.15.17-.31.38-.45.51-.15.14-.3.29-.13.58.18.3.81 1.34 1.74 2.17 1.2 1.07 2.21 1.4 2.52 1.55.31.15.49.13.67-.05.18-.18.78-.91 1-1.22.21-.31.42-.26.71-.16.29.11 1.84.87 2.15 1.03.31.16.52.24.6.37.08.13.08.78-.16 1.46z"/></svg>
+</a>
+
+</body>
+</html>
